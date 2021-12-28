@@ -1,4 +1,4 @@
-	package ua.lviv.iot.view;
+package ua.lviv.iot.view;
 
 import dnl.utils.text.table.TextTable;
 import ua.lviv.iot.manager.EntityManager;

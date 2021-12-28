@@ -5,155 +5,184 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema shop
+-- Schema 6lab
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema shop
+-- Schema 6lab
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `shop` DEFAULT CHARACTER SET utf8 ;
-USE `shop` ;
+CREATE SCHEMA IF NOT EXISTS `6lab` DEFAULT CHARACTER SET utf8 ;
+USE `6lab` ;
 
 -- -----------------------------------------------------
--- Table `shop`.`destination_address`
+-- Table `6lab`.`subject`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`destination_address` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `region` VARCHAR(45) NOT NULL,
-  `city_vilage` VARCHAR(45) NOT NULL,
-  `street` VARCHAR(45) NOT NULL,
-  `building` VARCHAR(45) NOT NULL,
-  `flat` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `shop`.`products`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`products` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `weight` VARCHAR(45) NOT NULL,
-  `nutritions` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
+DROP TABLE IF EXISTS `6lab`.`subject`;
+CREATE TABLE `6lab`.`subject` (
+                                          `id` INT NOT NULL AUTO_INCREMENT,
+                                          `name` VARCHAR(45) NOT NULL,
+                                          `cluster_program_id` INT NOT NULL,
+                                          PRIMARY KEY (`id`),
+                                          INDEX `fk_subject_cluster_program1_idx` (`cluster_program_id` ASC) VISIBLE,
+                                          CONSTRAINT `fk_subject_cluster_program1`
+                                              FOREIGN KEY (`cluster_program_id`)
+                                                  REFERENCES `6lab`.`cluster_program` (`id`)
+                                                  ON DELETE NO ACTION
+                                                  ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `shop`.`order`
+-- Table `6lab`.`student_group`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`order` (
-  `idorder` INT NOT NULL AUTO_INCREMENT,
-  `destination_address_id` INT NOT NULL,
-  `products_id` INT NOT NULL,
-  PRIMARY KEY (`idorder`),
-  INDEX `fk_order_destination_address_idx` (`destination_address_id` ASC) VISIBLE,
-  INDEX `fk_order_products1_idx` (`products_id` ASC) VISIBLE,
-  CONSTRAINT `fk_order_destination_address`
-    FOREIGN KEY (`destination_address_id`)
-    REFERENCES `shop`.`destination_address` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_order_products1`
-    FOREIGN KEY (`products_id`)
-    REFERENCES `shop`.`products` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `6lab`.`student_group`;
+CREATE TABLE `6lab`.`student_group` (
+                                                `id` INT NOT NULL AUTO_INCREMENT,
+                                                `name` VARCHAR(45) NOT NULL,
+                                                `entry_year` INT NOT NULL,
+                                                PRIMARY KEY (`id`))
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `shop`.`transaction`
+-- Table `6lab`.`student`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`transaction` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `data_of_transaction` VARCHAR(45) NOT NULL,
-  `sum` VARCHAR(45) NOT NULL,
-  `discount_in_percent` VARCHAR(45) NOT NULL,
-  `status_of_transaction` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `6lab`.`student`;
+CREATE TABLE `6lab`.`student` (
+                                          `id` INT NOT NULL AUTO_INCREMENT,
+                                          `surname` VARCHAR(45) NOT NULL,
+                                          `student_group_id` INT NOT NULL,
+                                          `subject_id` INT NOT NULL,
+                                          PRIMARY KEY (`id`),
+                                          INDEX `fk_student_student_group1_idx` (`student_group_id` ASC) VISIBLE,
+                                          INDEX `fk_student_subject1_idx` (`subject_id` ASC) VISIBLE,
+                                          CONSTRAINT `fk_student_student_group1`
+                                              FOREIGN KEY (`student_group_id`)
+                                                  REFERENCES `6lab`.`student_group` (`id`)
+                                                  ON DELETE NO ACTION
+                                                  ON UPDATE NO ACTION,
+                                          CONSTRAINT `fk_student_subject1`
+                                              FOREIGN KEY (`subject_id`)
+                                                  REFERENCES `6lab`.`subject` (`id`)
+                                                  ON DELETE NO ACTION
+                                                  ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `6lab`.`response`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `6lab`.`response`;
+CREATE TABLE `6lab`.`response` (
+                                           `id` INT NOT NULL AUTO_INCREMENT,
+                                           `data` INT NOT NULL,
+                                           `text` VARCHAR(200) NOT NULL,
+                                           `rating` INT NOT NULL,
+                                           `student_id` INT NOT NULL,
+                                           PRIMARY KEY (`id`),
+                                           INDEX `fk_response_student1_idx` (`student_id` ASC) VISIBLE,
+                                           CONSTRAINT `fk_response_student1`
+                                               FOREIGN KEY (`student_id`)
+                                                   REFERENCES `6lab`.`student` (`id`)
+                                                   ON DELETE NO ACTION
+                                                   ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `shop`.`general_info`
+-- Table `6lab`.`cluster_program`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`general_info` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `general_infocol` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `phone` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `6lab`.`cluster_program`;
+CREATE TABLE `6lab`.`cluster_program` (
+                                                  `id` INT NOT NULL AUTO_INCREMENT,
+                                                  `name` VARCHAR(45) NOT NULL,
+                                                  `time_of_event` VARCHAR(45) NOT NULL,
+                                                  PRIMARY KEY (`id`))
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `shop`.`social_info`
+-- Table `6lab`.`lecturer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`social_info` (
-  `idsocial_info` INT NOT NULL AUTO_INCREMENT,
-  `facebook` VARCHAR(45) NOT NULL,
-  `instagram` VARCHAR(45) NOT NULL,
-  `twitter` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idsocial_info`))
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `6lab`.`lecturer`;
+CREATE TABLE `6lab`.`lecturer` (
+                                           `id` INT NOT NULL AUTO_INCREMENT,
+                                           `surname` VARCHAR(45) NOT NULL,
+                                           `subject_id` INT NOT NULL,
+                                           PRIMARY KEY (`id`),
+                                           INDEX `fk_lecturer_subject_idx` (`subject_id` ASC) VISIBLE,
+                                           CONSTRAINT `fk_lecturer_subject`
+                                               FOREIGN KEY (`subject_id`)
+                                                   REFERENCES `6lab`.`subject` (`id`))
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `shop`.`user_info`
+-- Table `6lab`.`speaker`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`user_info` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `general_info_id` INT NOT NULL,
-  `social_info_idsocial_info` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_user_info_general_info1_idx` (`general_info_id` ASC) VISIBLE,
-  INDEX `fk_user_info_social_info1_idx` (`social_info_idsocial_info` ASC) VISIBLE,
-  CONSTRAINT `fk_user_info_general_info1`
-    FOREIGN KEY (`general_info_id`)
-    REFERENCES `shop`.`general_info` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_info_social_info1`
-    FOREIGN KEY (`social_info_idsocial_info`)
-    REFERENCES `shop`.`social_info` (`idsocial_info`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `6lab`.`speaker`;
+CREATE TABLE `6lab`.`speaker` (
+                                          `id` INT NOT NULL AUTO_INCREMENT,
+                                          `surname` VARCHAR(45) NOT NULL,
+                                          `firm` VARCHAR(45) NOT NULL,
+                                          `subject_id` INT NOT NULL,
+                                          PRIMARY KEY (`id`),
+                                          INDEX `fk_speakers_subject1_idx` (`subject_id` ASC) VISIBLE,
+                                          CONSTRAINT `fk_speakers_subject1`
+                                              FOREIGN KEY (`subject_id`)
+                                                  REFERENCES `6lab`.`subject` (`id`)
+                                                  ON DELETE NO ACTION
+                                                  ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
 
+USE `6lab` ;
 
--- -----------------------------------------------------
--- Table `shop`.`user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `shop`.`user` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `order_idorder` INT NOT NULL,
-  `transaction_id` INT NOT NULL,
-  `user_info_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_user_order1_idx` (`order_idorder` ASC) VISIBLE,
-  INDEX `fk_user_transaction1_idx` (`transaction_id` ASC) VISIBLE,
-  INDEX `fk_user_user_info1_idx` (`user_info_id` ASC) VISIBLE,
-  CONSTRAINT `fk_user_order1`
-    FOREIGN KEY (`order_idorder`)
-    REFERENCES `shop`.`order` (`idorder`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_transaction1`
-    FOREIGN KEY (`transaction_id`)
-    REFERENCES `shop`.`transaction` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_user_info1`
-    FOREIGN KEY (`user_info_id`)
-    REFERENCES `shop`.`user_info` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- subject
+INSERT INTO `6lab`.`subject`(`name`, `cluster_program_id`) VALUES ('Math', 1);
+INSERT INTO `6lab`.`subject`(`name`, `cluster_program_id`) VALUES ('Web', 1);
+INSERT INTO `6lab`.`subject`(`name`, `cluster_program_id`) VALUES ('Data', 1);
+INSERT INTO `6lab`.`subject`(`name`, `cluster_program_id`) VALUES ('Algo', 1);
+INSERT INTO `6lab`.`subject`(`name`, `cluster_program_id`) VALUES ('Eng', 1);
 
+-- speaker
+INSERT INTO `6lab`.`speaker`(`surname`, `firm`, `subject_id`) VALUES ('Kyba', 'SoftServe', 1);
+INSERT INTO `6lab`.`speaker`(`surname`, `firm`, `subject_id`) VALUES ('Veres', 'SoftServe', 4);
+INSERT INTO `6lab`.`speaker`(`surname`, `firm`, `subject_id`) VALUES ('Mask', 'SpaceX', 3);
+INSERT INTO `6lab`.`speaker`(`surname`, `firm`, `subject_id`) VALUES ('Einstein', 'World', 2);
+INSERT INTO `6lab`.`speaker`(`surname`, `firm`, `subject_id`) VALUES ('Newton', 'World', 2);
+
+-- lecturer
+INSERT INTO `6lab`.`lecturer`(`surname`, `subject_id`) VALUES ('Rubak', '1');
+INSERT INTO `6lab`.`lecturer`(`surname`, `subject_id`) VALUES ('Ivanov', '1');
+INSERT INTO `6lab`.`lecturer`(`surname`, `subject_id`) VALUES ('Bek', '3');
+INSERT INTO `6lab`.`lecturer`(`surname`, `subject_id`) VALUES ('Marchyk', '4');
+INSERT INTO `6lab`.`lecturer`(`surname`, `subject_id`) VALUES ('Ivanyk', '5');
+
+-- cluster_program
+INSERT INTO `6lab`.`cluster_program`(`name`, `time_of_event`) VALUES ('IT', '100');
+INSERT INTO `6lab`.`cluster_program`(`name`, `time_of_event`) VALUES ('Languages', '10');
+INSERT INTO `6lab`.`cluster_program`(`name`, `time_of_event`) VALUES ('Frontent', '10');
+INSERT INTO `6lab`.`cluster_program`(`name`, `time_of_event`) VALUES ('Backend', '10');
+INSERT INTO `6lab`.`cluster_program`(`name`, `time_of_event`) VALUES ('BigData', '10');
+
+-- student
+INSERT INTO `6lab`.`student`(`surname`, `student_group_id`, `subject_id`) VALUES ('6lab', 1, 1);
+INSERT INTO `6lab`.`student`(`surname`, `student_group_id`, `subject_id`) VALUES ('Vavrunchyk', 2, 5);
+INSERT INTO `6lab`.`student`(`surname`, `student_group_id`, `subject_id`) VALUES ('Androsiyk', 3, 3);
+INSERT INTO `6lab`.`student`(`surname`, `student_group_id`, `subject_id`) VALUES ('Dmytryshyn', 3, 2);
+INSERT INTO `6lab`.`student`(`surname`, `student_group_id`, `subject_id`) VALUES ('Deinecka', 4, 1);
+
+-- student_group
+INSERT INTO `6lab`.`student_group`(`name`, `entry_year`) VALUES ('IR-21', 2020);
+INSERT INTO `6lab`.`student_group`(`name`, `entry_year`) VALUES ('IR-11', 2021);
+INSERT INTO `6lab`.`student_group`(`name`, `entry_year`) VALUES ('IR-22', 2020);
+INSERT INTO `6lab`.`student_group`(`name`, `entry_year`) VALUES ('IR-23', 2020);
+INSERT INTO `6lab`.`student_group`(`name`, `entry_year`) VALUES ('IR-12', 2021);
+
+-- response
+INSERT INTO `6lab`.`response`(`data`, `text`, `rating`, `student_id`) VALUES (12, 'really good performance', 5, 1);
+INSERT INTO `6lab`.`response`(`data`, `text`, `rating`, `student_id`) VALUES (17, 'really bad performance', 2, 5);
+INSERT INTO `6lab`.`response`(`data`, `text`, `rating`, `student_id`) VALUES (30, 'really ideal performance', 1, 1);
+INSERT INTO `6lab`.`response`(`data`, `text`, `rating`, `student_id`) VALUES (15, 'really perfect performance', 4, 1);
+INSERT INTO `6lab`.`response`(`data`, `text`, `rating`, `student_id`) VALUES (19, 'really terrible performance', 3, 2);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public final class ConnectionManager {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/shop?allowPublicKeyRetrieval=true&" +
+    private static final String URL = "jdbc:mysql://localhost:3306/6lab?allowPublicKeyRetrieval=true&" +
             "createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "t123456";
