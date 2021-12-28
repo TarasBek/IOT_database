@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Subject</title>
+</head>
+<body>
+<form action="#" th:action="@{/subject-update}" th:object="${subject}" method="post">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+    <br/>
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <br>
+    <label for="clusterProgram">Cluster Program Id</label>
+    <input type="text" th:field="*{clusterProgram}" id="clusterProgram" placeholder="Cluster Program Id">
+    <br>
+    <input type="submit" value="Update Subject">
+</form>
+</body>
+</html>
