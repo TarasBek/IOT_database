@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Responses</title>
+</head>
+<body>
+<div th:switch="${responses}">
+    <h2 th:case="null">No responses found!</h2>
+    <div th:case="*">
+        <h2>Responses</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>data</th>
+                <th>text</th>
+                <th>rating</th>
+                <th>student id</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="response : ${responses}">
+                <td th:text="${response.id}"></td>
+                <td th:text="${response.data}"></td>
+                <td th:text="${response.text}"></td>
+                <td th:text="${response.rating}"></td>
+                <td th:text="${response.student}"></td>
+                <td><a th:href="@{response-update/{id}(id=${response.id})}">Edit</a></td>
+                <td><a th:href="@{response-delete/{id}(id=${response.id})}">Delete</a></td>
+                <td><a th:href="@{response/{id}(id=${response.id})}">Get</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/response-create">Create response</a></p>
+</div>
+</body>
+</html>
+

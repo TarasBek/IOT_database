@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Get</title>
+</head>
+<body>
+<form action="#" th:action="@{/response}" th:object="${responses}" method="post">
+    <label>ID - </label>
+    <b th:text="${response.id}"></b>
+    <br>
+    <label>Data - </label>
+    <b th:text="${response.data}"></b>
+    <br>
+    <label>Text - </label>
+    <b th:text="${response.text}"></b>
+    <br>
+    <label>Rating - </label>
+    <b th:text="${response.rating}"></b>
+    <br>
+    <label>Student Id - </label>
+    <b th:text="${response.student}"></b>
+    <br>
+</form>
+</body>
+</html>

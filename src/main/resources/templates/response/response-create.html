@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Response</title>
+</head>
+<body>
+<form action="#" th:action="@{/response-create}" th:object="${response}" method="post">
+    <label for="data">Data</label>
+    <input type="text" th:field="*{data}" id="data" placeholder="Data">
+    <br>
+    <label for="text">Text</label>
+    <input type="text" th:field="*{text}" id="text" placeholder="Text">
+    <br>
+    <label for="rating">Rating</label>
+    <input type="text" th:field="*{rating}" id="rating" placeholder="Rating">
+    <br>
+    <label for="student">Student Id</label>
+    <input type="text" th:field="*{student}" id="student" placeholder="Student Id">
+    <br>
+    <input type="submit" value="Create Response">
+</form>
+</body>
+</html>

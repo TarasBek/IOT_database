@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Get</title>
+</head>
+<body>
+<form action="#" th:action="@{/clusterProgram}" th:object="${clusterPrograms}" method="post">
+    <label>ID - </label>
+    <b th:text="${clusterProgram.id}"></b>
+    <br>
+    <label>Name - </label>
+    <b th:text="${clusterProgram.name}"></b>
+    <br>
+    <label>Time of Event - </label>
+    <b th:text="${clusterProgram.timeOfEvent}"></b>
+    <br>
+</form>
+</body>
+</html>

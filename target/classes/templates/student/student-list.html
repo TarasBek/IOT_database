@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+<div th:switch="${students}">
+    <h2 th:case="null">No students found!</h2>
+    <div th:case="*">
+        <h2>Students</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>surname</th>
+                <th>Student Group Id</th>
+                <th>Subject Id</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.surname}"></td>
+                <td th:text="${student.studentGroup}"></td>
+                <td th:text="${student.subject}"></td>
+                <td><a th:href="@{student-update/{id}(id=${student.id})}">Edit</a></td>
+                <td><a th:href="@{student-delete/{id}(id=${student.id})}">Delete</a></td>
+                <td><a th:href="@{student/{id}(id=${student.id})}">Get</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/student-create">Create student</a></p>
+</div>
+</body>
+</html>
+

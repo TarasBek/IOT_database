@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Speaker</title>
+</head>
+<body>
+<form action="#" th:action="@{/speaker-create}" th:object="${speaker}" method="post">
+    <label for="surname">Surname</label>
+    <input type="text" th:field="*{surname}" id="surname" placeholder="Surname">
+    <br>
+    <label for="firm">Firm</label>
+    <input type="text" th:field="*{firm}" id="firm" placeholder="Firm">
+    <br>
+    <label for="subject">Subject Id</label>
+    <input type="text" th:field="*{subject}" id="subject" placeholder="Subject Id">
+    <br>
+    <input type="submit" value="Create Speaker">
+</form>
+</body>
+</html>

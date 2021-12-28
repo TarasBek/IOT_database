@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Get</title>
+</head>
+<body>
+<form action="#" th:action="@{/student}" th:object="${student}" method="post">
+    <label>ID - </label>
+    <b th:text="${student.id}"></b>
+    <br>
+    <label>Surname - </label>
+    <b th:text="${student.surname}"></b>
+    <br>
+    <label>Student Group Id - </label>
+    <b th:text="${student.studentGroup}"></b>
+    <br>
+    <label>Subject Id - </label>
+    <b th:text="${student.subject}"></b>
+    <br>
+</form>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cluster Programs</title>
+</head>
+<body>
+<div th:switch="${clusterPrograms}">
+    <h2 th:case="null">No cluster program found!</h2>
+    <div th:case="*">
+        <h2>Cluster Programs</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>name</th>
+                <th>Time Of Event</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="clusterProgram : ${clusterPrograms}">
+                <td th:text="${clusterProgram.id}"></td>
+                <td th:text="${clusterProgram.name}"></td>
+                <td th:text="${clusterProgram.timeOfEvent}"></td>
+                <td><a th:href="@{clusterProgram-update/{id}(id=${clusterProgram.id})}">Edit</a></td>
+                <td><a th:href="@{clusterProgram-delete/{id}(id=${clusterProgram.id})}">Delete</a></td>
+                <td><a th:href="@{clusterProgram/{id}(id=${clusterProgram.id})}">Get</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/clusterProgram-create">Create cluster program</a></p>
+</div>
+</body>
+</html>
+

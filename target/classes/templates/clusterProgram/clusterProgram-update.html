@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Cluster Program</title>
+</head>
+<body>
+<form action="#" th:action="@{/clusterProgram-update}" th:object="${clusterProgram}" method="post">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+    <br/>
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <br>
+    <label for="timeOfEvent">Time Of Event</label>
+    <input type="text" th:field="*{timeOfEvent}" id="timeOfEvent" placeholder="Time Of Event">
+    <br>
+    <input type="submit" value="Update Cluster Program">
+</form>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Speakers</title>
+</head>
+<body>
+<div th:switch="${speakers}">
+    <h2 th:case="null">No speakers found!</h2>
+    <div th:case="*">
+        <h2>Speakers</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>surname</th>
+                <th>firm</th>
+                <th>Subject Id</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="speaker : ${speakers}">
+                <td th:text="${speaker.id}"></td>
+                <td th:text="${speaker.surname}"></td>
+                <td th:text="${speaker.firm}"></td>
+                <td th:text="${speaker.subject}"></td>
+                <td><a th:href="@{speaker-update/{id}(id=${speaker.id})}">Edit</a></td>
+                <td><a th:href="@{speaker-delete/{id}(id=${speaker.id})}">Delete</a></td>
+                <td><a th:href="@{speaker/{id}(id=${speaker.id})}">Get</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/speaker-create">Create speaker</a></p>
+</div>
+</body>
+</html>
+
